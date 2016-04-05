@@ -126,21 +126,21 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
   
  
 ## Using HIVE and HIVE SQL to solve the problem
- * Hive creates it's own file setup.  This is, by default, in the HIVE Warehouse. 
+> Hive creates it's own file setup.  This is, by default, in the HIVE Warehouse. 
  * The file is stored as a myDatabase.db folder with the tables, in this case answer, under it.
  * From the terminal window, start the Hive terminal.  This can also, in part, be done via the HUE interface.
    * $ hive    --> starts hive shell
    * hive> create table answers(id int, grid int, i int, gs int, qt int, tags string, gvc int, gac int, aid int, j int, as int, at int) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;";
    * hive> Load DATA LOCAL INPATH '/home/cloudera/Documents/dataSocialMediaExercise/answers_noHeader.csv' INTO TABLE answers;
- > 
+> 
 > **QUESTION 1 -  Top 10 most commonly used tags in this data set.**
   * hive> SELECT my_tag, count(*) AS cnt FROM (SELECT EXPLODE(split(tags, ',')) AS my_tag FROM answers) inner_query GROUP BY my_tag ORDER BY cnt DESC limit 10;
- > 
- > **Question 2 – Average time to answer questions.**
+> 
+> **Question 2 – Average time to answer questions.**
   * hive> SELECT AVG(time_sum) FROM (SELECT at - qt AS time_sum FROM answers)inner_query; 
- >   
- > **Question 3 -- Number of questions which got answered within 1 hour.**
+>   
+> **Question 3 -- Number of questions which got answered within 1 hour.**
   * hive> SELECT count(*) FROM (SELECT at - qt AS time FROM answers ) inner_query  WHERE time < 3600; 
- >  
- > **Question 4 -- tags of questions which got answered within 1 hour.**
+>  
+> **Question 4 -- tags of questions which got answered within 1 hour.**
   * hive> SELECT COUNT(*) FROM (SELECT * FROM (SELECT EXPLODE(split(tags, ',')) AS my_tag FROM (SELECT tags, at, qt FROM answers WHERE at - qt < 3600) inner_query) inner_query GROUP BY my_tag) inner_querry;
