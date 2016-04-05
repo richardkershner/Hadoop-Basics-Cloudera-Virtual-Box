@@ -76,3 +76,35 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
    
      * Make sure to feed the answer from the first one into the second one.
      * $ hadoop jar hdfs_top10_b.jar com.hdfs_top10_b /user/cloudera/socialmedia/out/part-r-00000  /user/cloudera/socialmedia/out
+
+##Using Pig and Pig Latin to solve the problems
+Pig is used ontop of the HDFS uploaded files as an alternative method to pull data as the mapReduce.
+  * Open a terminal window
+     * $ pig -x mapred;  l  --> log into shell in the hdfs system as opposed to local
+     * grunt>     --> Pig terminal
+  * Note the following tags are helpful for viewing data while figuring out the answer.
+     * myVariable.show();   --> shows all the data in the variable.  CAREFULL as might overload.
+     * myVariable.first(); --> shows first row of data
+     * myVariable.last(); --> shows last row of data
+     * ILLUSTRATE myVariable;  --> shows random row of data
+  * Note the following format returned.
+     * map which shows both the key and the value   
+     * tuples (value1, value2)
+  * Question 1
+     * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
+     * grunt> tag_bag = foreach answers GENERATE TOKENIZE(tags);
+     * grunt>  all_tags = foreach tag_bag generate FLATTEN($0) AS sing_tag:chararray;
+     * grunt> ILLUSTRATE all_tags;
+     * grunt> tags_grp =group all_tags BY sing_tag;which
+     * grunt> tag_cnt = foreach tags_grp generate group, COUNT(all_tags) as wc_cnt;
+     * grunt>  ILLUSTRATE tag_cnt;
+     * grunt>tag_ordered = ORDER tag_cnt BY wc_cnt DESC;  ASC DESC
+     * grunt>  ILLUSTRATE tag_ordered;  
+     * grunt> no_null =  FILTER tag_ordered  BY group is not null;
+     * grunt> top10 = limit no_null 10; 
+  * Question 2
+     * 
+  * Question 3
+     * 
+  * Question 4
+     * 
