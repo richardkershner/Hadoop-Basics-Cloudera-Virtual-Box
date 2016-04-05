@@ -1,0 +1,8 @@
+First, going over the data:
+
+**Downloaded answers.csv, deleted top row and saved as answers_noHeader.csv**
+*263540 records in the noHeader version
+*note fields seperated by ';' and tags field seperated by ','
+*qt(question time) and at(answer time) are in epoch format.  (at - qt) / 3600 =times in minutes
+
+I will run the 4 Q/As in the 3 formats of mapReduce jar(s), Pig (Pig Latin) and hive (SQL querry).  My first, and last thoughts, this project is best suited for Hive, in general, as it allows for the flexibility of using all three as needed and the data is fairly organized.
