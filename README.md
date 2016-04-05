@@ -1,12 +1,37 @@
 # Hadoop-Basics-Cloudera-Virtual-Box
-This is from classroom projects for getting certified in Hadoop.  Included in this is a social media project project which can easily be used as help in other setups.  Eclipse use with Hadoop, very basic.  map Reduce, PIG and HIVE(SQL) Hadoop.
+This is from classroom projects for getting certified as as Software Developer in Hadoop File System (HDFS).  Included is a social media project which can easily be used as help in other basic test setups.  
+
+This covers: Cloudera Quick start on Virtual Box;  map Reduce; PIG and HIVE(SQL).
 >
-> Below is as follows
+> **Index**
+* Virtual Box, Cloudera quick start single node for testing
 * Overview with answers
 * map reduce.  Also reference Java files
 * Pig (Pig Latin)
 * HIVE (SQL)
 > Note:  All 3 are the same set of problems solved in different ways.
+
+##Virtual Box, Cloudera quick start notes
+> Virtual Box allows running a different operating system, client, on a host computer. In this example a Windows 10 home edition has the Virtual Box setup with the disc image.  The disc image is linux Centos with Cloudera, one of the HDFS options, on it.  
+> 
+> In short, this creates a single node for testing and learning HDFS on which is accessable from a PC. 
+> 
+> Both downloads can be found from their respective sites, FREE. 
+  * http://www.cloudera.com/downloads.html    -->  select Quickstarts
+  * http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html
+> 
+  * **Note in Virtual Box.**
+    * Make sure to use FILE and from the pull down, IMPORT to bring the Cloudera disk image.
+      * Using add button will cause errors.
+    * When starting up Cloudera in Virtual Box(VB), it will go through a setup screen.  Once the initial setup is done, click the esc button on the keyboard to load the actual linux cloudera.  (Hope that saves somebody the time of looking it up!)
+    * In Virtual Box, under Devices, set both shared clipboard and Drag and drop to bidirectional.
+       * The Drag and Drop is great for transfering files into VB but requires extra settings to work the other way.
+ > 
+  *  **Note in Cloudera on the VB**
+    * Terminal window easy access icon at the top of the window.
+    * HUE and File manager are the main two things used in the web browser.
+       * Maximize the window to see File Manager under the HUE as it is way to the left.
+    * Updating the linux system in the VB was necessary for one of the problems.  This also caused changes in the windows so the auto sizing doesn't work as good, along with other changes.  This means extra scrolling when viewing differnt things in the VB.
 
 ##OVERVIEW
 > First, going over the data:
@@ -88,41 +113,41 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
   * Note the following format returned.
      * map which shows both the key and the value   
      * tuples (value1, value2)
-     > 
-  > **QUESTION 1 -  Top 10 most commonly used tags in this data set.**
-     * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
-     * grunt> tag_bag = foreach answers GENERATE TOKENIZE(tags);
-     * grunt>  all_tags = foreach tag_bag generate FLATTEN($0) AS sing_tag:chararray;
-     * grunt> ILLUSTRATE all_tags;
-     * grunt> tags_grp =group all_tags BY sing_tag;which
-     * grunt> tag_cnt = foreach tags_grp generate group, COUNT(all_tags) as wc_cnt;
-     * grunt>  ILLUSTRATE tag_cnt;
-     * grunt>tag_ordered = ORDER tag_cnt BY wc_cnt DESC;  ASC DESC
-     * grunt>  ILLUSTRATE tag_ordered;  
-     * grunt> no_null =  FILTER tag_ordered  BY group is not null;
-     * grunt> top10 = limit no_null 10; 
-     > 
-  > **Question 2 – Average time to answer questions.**
-     * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
-     * grunt> a_time = foreach answers GENERATE at - qt AS time:int;
-     * grunt> time_grp = group a_time all;
-     * grunt> time_avg = foreach time_grp GENERATE AVG(a_time.time) as tam:double;
-     * grunt> time_in_minutes = foreach time_avg generate tam  / 3600 AS tm:double;
-     * grunt> dump;
-     > 
-  > **Question 3 -- Number of questions which got answered within 1 hour.**
-     * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
-     * grunt> q60 = FILTER answers BY at-qt < 3600;
-     * grunt> cnt   = foreach (GROUP q60 ALL) GENERATE COUNT(q60);
-  > 
-  > **Question 4 -- tags of questions which got answered within 1 hour.**
-     * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
-     * grunt> q60 = FILTER answers BY at-qt < 3600;
-     * grunt> tag_bag = foreach q60 GENERATE TOKENIZE(tags);
-     * grunt>  all_tags = foreach tag_bag GENERATE FLATTEN($0) AS sing_tag:chararray;
-     * grunt>  tags_grp =group all_tags BY sing_tag;
-     * grunt>  tags = foreach tags_grp GENERATE group AS sing_tag:chararray;
-     * grunt> cnt = foreach (GROUP tags ALL) GENERATE COUNT(tags);
+> 
+> **QUESTION 1 -  Top 10 most commonly used tags in this data set.**
+  * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
+  * grunt> tag_bag = foreach answers GENERATE TOKENIZE(tags);
+  * grunt>  all_tags = foreach tag_bag generate FLATTEN($0) AS sing_tag:chararray;
+  * grunt> ILLUSTRATE all_tags;
+  * grunt> tags_grp =group all_tags BY sing_tag;which
+  * grunt> tag_cnt = foreach tags_grp generate group, COUNT(all_tags) as wc_cnt;
+  * grunt>  ILLUSTRATE tag_cnt;
+  * grunt>tag_ordered = ORDER tag_cnt BY wc_cnt DESC;  ASC DESC
+  * grunt>  ILLUSTRATE tag_ordered;  
+  * grunt> no_null =  FILTER tag_ordered  BY group is not null;
+  * grunt> top10 = limit no_null 10; 
+> 
+> **Question 2 – Average time to answer questions.**
+  * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
+  * grunt> a_time = foreach answers GENERATE at - qt AS time:int;
+  * grunt> time_grp = group a_time all;
+  * grunt> time_avg = foreach time_grp GENERATE AVG(a_time.time) as tam:double;
+  * grunt> time_in_minutes = foreach time_avg generate tam  / 3600 AS tm:double;
+  * grunt> dump;
+> 
+> **Question 3 -- Number of questions which got answered within 1 hour.**
+  * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
+  * grunt> q60 = FILTER answers BY at-qt < 3600;
+  * runt> cnt   = foreach (GROUP q60 ALL) GENERATE COUNT(q60);
+> 
+> **Question 4 -- tags of questions which got answered within 1 hour.**
+  * grunt> answers = LOAD '/user/cloudera/socialmedia/answers_noHeader.csv' USING PigStorage(';') AS (id: int, grid: int, i: int, gs: int, qt: int, tags: chararray, gvc: int, gac: int, aid: int, j: int, as: int, at: int);
+  * grunt> q60 = FILTER answers BY at-qt < 3600;
+  * grunt> tag_bag = foreach q60 GENERATE TOKENIZE(tags);
+  * grunt>  all_tags = foreach tag_bag GENERATE FLATTEN($0) AS sing_tag:chararray;
+  * grunt>  tags_grp =group all_tags BY sing_tag;
+  * grunt>  tags = foreach tags_grp GENERATE group AS sing_tag:chararray;
+  * grunt> cnt = foreach (GROUP tags ALL) GENERATE COUNT(tags);
   
  
 ## Using HIVE and HIVE SQL to solve the problem
