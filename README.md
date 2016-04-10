@@ -1,7 +1,7 @@
-# Hadoop-Basics-Cloudera-Virtual-Box
+# Hadoop (Spark)-Basics-Cloudera-Virtual-Box
 This is from classroom projects for getting certified as as Software Developer in Hadoop File System (HDFS).  Included is a social media project which can easily be used as help in other basic test setups.  
 
-This covers: Cloudera Quick start on Virtual Box;  map Reduce; PIG and HIVE(SQL).
+This covers: Cloudera Quick start on Virtual Box;  map Reduce; PIG and HIVE(SQL).  Added in are 3 very basic spark Map Reduce calls.
 >
 > **Index**
 * Virtual Box, Cloudera quick start single node for testing
@@ -106,9 +106,6 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
      * $ pig -x mapred;  l  --> log into shell in the hdfs system as opposed to local
      * grunt>     --> Pig terminal
   * Note the following tags are helpful for viewing data while figuring out the answer.
-     * myVariable.show();   --> shows all the data in the variable.  CAREFULL as might overload.
-     * myVariable.first(); --> shows first row of data
-     * myVariable.last(); --> shows last row of data
      * ILLUSTRATE myVariable;  --> shows random row of data
   * Note the following format returned.
      * map which shows both the key and the value   
@@ -169,3 +166,9 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
 >  
 > **Question 4 -- tags of questions which got answered within 1 hour.**
   * hive> SELECT COUNT(*) FROM (SELECT * FROM (SELECT EXPLODE(split(tags, ',')) AS my_tag FROM (SELECT tags, at, qt FROM answers WHERE at - qt < 3600) inner_query) inner_query GROUP BY my_tag) inner_querry;
+  
+#PySpark#
+> Basics printed out as part of the terminal output.  This also worked great with saveAsTextFile and saveAsSequentialFilte instead of the python print command.
+* $ pyspark pySparkAveTime.py
+* $ pyspark pySparkQuestUnderOneHour.py
+* $ pyspark pySparkTop10.py
