@@ -171,9 +171,10 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
 > Basics printed out as part of the terminal output.  
 > This also works with saveAsTextFile(*path*) and saveAsSequentialFile(*path*) back into the HDFS file system embedded into the .py file.
 > Becuase these are basics codes, more standard formats of passing the source file and the target file should be used.
-*       import sys
+*       *import sys
 *       source_file_local = sys.argv[1]
-*       target_in_HDFS = sys.argv[2]
+*       target_in_HDFS = sys.argv[2]*
+* 
 * $ pyspark pySparkAveTime.py
 * $ pyspark pySparkQuestUnderOneHour.py
 * $ pyspark pySparkTop10.py
