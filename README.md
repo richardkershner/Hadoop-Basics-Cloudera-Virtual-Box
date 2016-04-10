@@ -168,7 +168,8 @@ The 4 Questions with Answers are processed in each of the 3 formats:  mapReduce 
   * hive> SELECT COUNT(*) FROM (SELECT * FROM (SELECT EXPLODE(split(tags, ',')) AS my_tag FROM (SELECT tags, at, qt FROM answers WHERE at - qt < 3600) inner_query) inner_query GROUP BY my_tag) inner_querry;
   
 #PySpark#
-> Basics printed out as part of the terminal output.  This also worked great with saveAsTextFile and saveAsSequentialFilte instead of the python print command.
+> Basics printed out as part of the terminal output.  
+> This also works with saveAsTextFile(*path*) and saveAsSequentialFile(*path*) back into the HDFS file system.
 * $ pyspark pySparkAveTime.py
 * $ pyspark pySparkQuestUnderOneHour.py
 * $ pyspark pySparkTop10.py
