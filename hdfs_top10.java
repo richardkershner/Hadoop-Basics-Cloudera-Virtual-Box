@@ -19,11 +19,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 // Mapper
 public class hdfs_top10 {
-	//-  Top 10 most commonly used tags in this data set, column 5 tag count
-	//Input key = 0, value =  ID(3); grid(563355);i(62701);gs(10); qt(1235000081); tags(php, error, gd); gvc(1047); gac(16); aid(563454); j(893); as(18); at(1234000501)
-	//                        2; 563355;62701;10;1235000081;php, error;1047;2;563372;67183;18;1234000501
-	//Output key = tags name (ie php), value =  1
-
 	public static class ccMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
 		Text outkey = new Text();
 		IntWritable outvalue = new IntWritable();
@@ -39,8 +34,6 @@ public class hdfs_top10 {
 	}
 		
 	//REDUCER
-	//Input key = Exercise & Fitness_clarksville, value =  cash or credit
-	//Output key = Exercise & Fitness_clarksville value= (100,2000,450)
 	public static class ccReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
 		IntWritable outvalue = new IntWritable();
 		public void reduce(Text key,Iterable<IntWritable> values,Context context) throws IOException, InterruptedException{
@@ -77,9 +70,6 @@ public class hdfs_top10 {
 		job.setJarByClass( hdfs_top10.class );
 	    job.setMapperClass( ccMapper.class );
 	    job.setReducerClass( ccReducer.class );
-	    
-	    //job.setNumReduceTasks(1);
-	    //job.setPartitionerClass(CustomPartitioner.class);
 	    
 	    job.setMapOutputKeyClass( Text.class );
 	    job.setMapOutputValueClass( IntWritable.class );

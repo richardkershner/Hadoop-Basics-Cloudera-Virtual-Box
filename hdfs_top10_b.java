@@ -4,13 +4,13 @@ import java.util.TreeMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
+//import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Mapper.Context;
+//import org.apache.hadoop.mapreduce.Mapper.Context;
 //import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -20,7 +20,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 // Mapper
 public class hdfs_top10_b {
-	//-  Top 10 most commonly used tags in this -- takes output from all tags with counts and returns only 10
+	//-  Top 10 most commonly used tags -- takes output from all tags with counts and returns only 10
 	//Input key = 0, value =  
 	//                        2; 563355;62701;10;1235000081;php, error;1047;2;563372;67183;18;1234000501
 	//Output key = "tags" value =  "php=1000"
@@ -37,11 +37,9 @@ public class hdfs_top10_b {
 		
 	//REDUCER
 	//Input key = tag
-	//Output key = totalCountt]
+	//Output key = totalCount
 	public static class ccReducer extends Reducer<Text,Text,Text,Text>{
 		public void reduce(Text key,Iterable<Text> values,Context context) throws IOException, InterruptedException{
-			// we want all tags tag hdfs=1000
-			// add hdfs to tree, and 1000  then delete.........
 			TreeMap< Double, String> tags10 = new TreeMap< Double, String>();
 			for(Text value: values){
 				String[] v = value.toString().split("\t");

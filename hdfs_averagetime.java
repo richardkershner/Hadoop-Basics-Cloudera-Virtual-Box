@@ -13,7 +13,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-
 // Mapper
 public class hdfs_averagetime {
 	//Input key = 0, value =  ID(3); grid(563355);i(62701);gs(10); qt(1235000081); tags(php, error, gd); gvc(1047); gac(16); aid(563454); j(893); as(18); at(1234000501)
@@ -38,8 +37,8 @@ public class hdfs_averagetime {
 	}
 		
 	//REDUCER
-	//Input key = Exercise & Fitness_clarksville, value =  cash or credit
-	//Output key = Exercise & Fitness_clarksville value= (100,2000,450)
+	//Input key = 'time', time
+	//Output average time
 	public static class ccReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
 		Text keyvalue = new Text();
 		IntWritable outvalue = new IntWritable();
@@ -50,7 +49,6 @@ public class hdfs_averagetime {
 				sum = sum + value.get();
 				totQuestions +=1;
 			}
-			//
 			int average = (int)(sum/totQuestions);
 			int secs = average/60;
 			int mins = secs/60;

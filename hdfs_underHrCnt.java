@@ -26,7 +26,6 @@ public class hdfs_underHrCnt {
 			String endtime = splitLine[11];
 			int deltatime = Integer.parseInt(endtime) - Integer.parseInt(starttime);
 			if (deltatime <3600){
-				//String S = 'question count';
 				outkey.set("questionCount");
 				outvalue.set(1);
 				context.write(outkey, outvalue);
