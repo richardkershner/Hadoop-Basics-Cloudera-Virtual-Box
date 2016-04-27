@@ -1,7 +1,7 @@
 '''
 Created on Apr 6, 2016
 
-@author: richard
+@author: Richard Kershner
 '''
 
 from pyspark import SparkContext
@@ -18,6 +18,6 @@ if __name__ == '__main__':
     parts = parts.reduceByKey(lambda p,y:p+y)
     parts = parts.map(lambda p: (p[0],(p[1]/totCount)/3600))
     myOut = parts.collect()
-print("================================== my test out ==========================")
+print("================================== test out ==========================")
 print(myOut)
 print("==================================== good bye ============================")
