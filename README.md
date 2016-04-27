@@ -30,8 +30,8 @@ This covers: Cloudera Quick start on Virtual Box;  map Reduce; PIG and HIVE(SQL)
   *  **Note in Cloudera on the VB**
     * Terminal window easy access icon at the top of the window.
     * HUE and File manager are the main two things used in the web browser.
-       * Maximize the window to see File Manager under the HUE as it is way to the left.
-    * Updating the linux system in the VB was necessary for one of the problems.  This also caused changes in the windows so the auto sizing doesn't work as good, along with other changes.  This means extra scrolling when viewing differnt things in the VB.
+       * Maximize the window to see File Manager under the HUE as it is way to the right.
+    * Updating the linux system in the VB was necessary for one of the problems.  This also caused changes in the windows so the auto sizing doesn't work as good, along with other changes.  This means extra scrolling when viewing different things in the VB.
 
 ##OVERVIEW
 > First, going over the data:
