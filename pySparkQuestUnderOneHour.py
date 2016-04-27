@@ -1,11 +1,10 @@
 '''
 Created on Apr 6, 2016
 
-@author: richard
+@author: Richard Kershner
 '''
 
 from pyspark import SparkContext
-
 
 myOut = ""
 if __name__ == '__main__':
