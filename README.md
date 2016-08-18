@@ -18,6 +18,7 @@ This covers: Cloudera Quick start on Virtual Box;  map Reduce; PIG and HIVE(SQL)
 > 
 > Both downloads can be found from their respective sites, FREE. 
   * http://www.cloudera.com/downloads.html    -->  select Quickstarts
+    * As of Aug. 18th,2016, only the older cloudera quickstart, CDH 5.7, has the VB image
   * http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html
 > 
   * **Note in Virtual Box.**
